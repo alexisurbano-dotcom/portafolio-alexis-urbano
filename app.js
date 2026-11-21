@@ -1,20 +1,9 @@
 /**
- * Portafolio Académico — Alexis Uriel Urbano Elorriaga
- * Carrera: Diseño y Desarrollo de Sistemas (Tecsup)
+ * Script principal del portafolio - Alexis Uriel Urbano Elorriaga
  * Curso: Diseño de Interfaces | Docente: Miguel Pallín
- *
- * Código escrito en JavaScript puro (Vanilla JS), sin librerías externas:
- *  1. Menú de navegación adaptable a móviles
- *  2. Indicador de sección activa al desplazarse (IntersectionObserver)
- *  3. Filtro de proyectos por categoría en la sección Galería
- *  4. Visor de imágenes ampliadas con el elemento nativo <dialog>
- *  5. Validación y envío del formulario de contacto a MySQL (guardar_contacto.php) + copia al correo
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Asegura que la tabla 'contactos' exista en MySQL al cargar en InfinityFree
-  fetch('ver_contactos.php', { method: 'GET' }).catch(() => {});
-
   /* =========================================================================
      1. MENÚ MÓVIL ACCESIBLE
      ========================================================================= */

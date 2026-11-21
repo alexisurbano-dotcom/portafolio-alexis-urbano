@@ -1,0 +1,572 @@
+<?php
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+header('Expires: 0');
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portafolio web de Alexis Uriel Urbano Elorriaga - Estudiante de Diseño y Desarrollo de Sistemas en Tecsup.">
+  <title>Alexis Urbano | Portafolio Web</title>
+  <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+
+  <a class="saltar-contenido" href="#contenido-principal">Saltar al contenido</a>
+
+  <!-- Cabecera -->
+  <header class="cabecera">
+    <div class="contenedor barra-nav">
+      <a class="marca" href="#inicio">
+        Alexis Urbano<span>.</span>
+      </a>
+
+      <button class="boton-menu" id="btnMenu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menuPrincipal">
+        <span class="icono-hamburguesa" aria-hidden="true"></span>
+      </button>
+
+      <nav class="navegacion" id="menuPrincipal" aria-label="Navegación principal">
+        <a href="#inicio" class="nav-enlace activo">Inicio</a>
+        <a href="#nosotros" class="nav-enlace">Nosotros</a>
+        <a href="#habilidades" class="nav-enlace">Habilidades</a>
+        <a href="#galeria" class="nav-enlace">Galería</a>
+        <a href="#testimonios" class="nav-enlace">Testimonios</a>
+        <a href="#contactos" class="nav-enlace nav-contacto">Contactos</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido-principal">
+
+    <!-- Inicio -->
+    <section id="inicio" class="seccion-inicio">
+      <div class="contenedor inicio-grid">
+        <div class="inicio-texto">
+          <p class="indice-seccion">Diseño y Desarrollo de Sistemas - Tecsup</p>
+          <h1>Hola, soy Alexis Uriel Urbano Elorriaga</h1>
+          <p class="resumen-inicio">
+            Soy estudiante de <strong>Diseño y Desarrollo de Sistemas</strong>. En este portafolio reúno las páginas web y prácticas que he venido armando en el curso de Diseño de Interfaces usando HTML5, CSS3, JavaScript y conexión a MySQL con PHP.
+          </p>
+
+          <div class="acciones-inicio">
+            <a href="#galeria" class="boton boton-primario">Ver mis proyectos</a>
+            <a href="#contactos" class="boton boton-secundario">Dejar un mensaje</a>
+          </div>
+
+          <dl class="ficha-academica">
+            <div>
+              <dt>Carrera</dt>
+              <dd>Diseño y Desarrollo de Sistemas</dd>
+            </div>
+            <div>
+              <dt>Curso</dt>
+              <dd>Diseño de Interfaces</dd>
+            </div>
+            <div>
+              <dt>Docente</dt>
+              <dd>Miguel Pallín</dd>
+            </div>
+          </dl>
+        </div>
+
+        <figure class="inicio-Visual">
+          <div class="marco-retrato">
+            <img src="img/retrato.png" alt="Foto de Alexis Uriel Urbano Elorriaga" width="440" height="500">
+          </div>
+          <figcaption class="pie-retrato">
+            Tecsup | Ciclo 2026-II
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Nosotros / Sobre mi -->
+    <section id="nosotros" class="seccion seccion-alterna">
+      <div class="contenedor">
+        <div class="encabezado-seccion">
+          <span class="numero-seccion">Sobre mí</span>
+          <h2>Mi formación y lo que vengo trabajando</h2>
+        </div>
+
+        <div class="sobre-layout">
+          <div class="sobre-narrativa">
+            <p class="parrafo-destacado">
+              Estudio Diseño y Desarrollo de Sistemas en Tecsup. Me gusta la parte práctica del desarrollo web: pasar de una idea o boceto a una página que realmente funcione en el navegador y guarde datos en un servidor.
+            </p>
+            <p>
+              Durante el curso de <strong>Diseño de Interfaces</strong> con el profesor <strong>Miguel Pallín</strong>, he trabajado en mejorar el orden de mi código, cuidar que las vistas se adapten bien al celular sin romperse y conectar formularios reales con bases de datos.
+            </p>
+            <p>
+              Trato de mantener mis proyectos separados de forma clara (HTML para la estructura, CSS para el diseño y JavaScript para la lógica) y subir mis avances a GitHub para llevar un mejor control.
+            </p>
+          </div>
+
+          <div class="sobre-ejes">
+            <div class="eje-item">
+              <span class="eje-indice">1.</span>
+              <div>
+                <h3>Diseño adaptable (Responsive)</h3>
+                <p>Maquetación con Flexbox, CSS Grid y Media Queries para que la página se acomode bien en celulares, tablets y monitores.</p>
+              </div>
+            </div>
+
+            <div class="eje-item">
+              <span class="eje-indice">2.</span>
+              <div>
+                <h3>JavaScript y consumo de APIs</h3>
+                <p>Manejo de eventos en el DOM, validación de campos y uso de <code>fetch()</code> para mostrar datos en tiempo real desde servicios externos.</p>
+              </div>
+            </div>
+
+            <div class="eje-item">
+              <span class="eje-indice">3.</span>
+              <div>
+                <h3>Conexión con PHP y MySQL</h3>
+                <p>Envío de formularios mediante método POST hacia scripts en PHP para guardar y consultar registros en una base de datos MySQL.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Habilidades -->
+    <section id="habilidades" class="seccion">
+      <div class="contenedor">
+        <div class="encabezado-seccion">
+          <span class="numero-seccion">Conocimientos</span>
+          <h2>Herramientas que uso en mis proyectos</h2>
+          <p class="subtitulo-seccion">
+            Tecnologías que he puesto en práctica en los laboratorios y entregas del ciclo.
+          </p>
+        </div>
+
+        <div class="tabla-habilidades">
+          <div class="fila-habilidad">
+            <div class="area-habilidad">
+              <h3>Maquetación y Estilos</h3>
+              <span>Frontend</span>
+            </div>
+            <div class="detalle-habilidad">
+              <ul class="etiquetas-tech">
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>Flexbox</li>
+                <li>CSS Grid</li>
+                <li>Bootstrap 5</li>
+              </ul>
+              <p>Armado de estructuras semánticas, hojas de estilo propias, adaptación a pantallas móviles y organización visual de formularios y tablas.</p>
+            </div>
+          </div>
+
+          <div class="fila-habilidad">
+            <div class="area-habilidad">
+              <h3>JavaScript</h3>
+              <span>Interactividad</span>
+            </div>
+            <div class="detalle-habilidad">
+              <ul class="etiquetas-tech">
+                <li>JavaScript ES6</li>
+                <li>Eventos y DOM</li>
+                <li>Fetch API</li>
+                <li>JSON</li>
+              </ul>
+              <p>Filtros para galerías, cotizadores dinámicos, menús desplegables en móvil, validación de formularios y conexión con APIs como Open-Meteo.</p>
+            </div>
+          </div>
+
+          <div class="fila-habilidad">
+            <div class="area-habilidad">
+              <h3>Base de Datos y Backend</h3>
+              <span>Servidor</span>
+            </div>
+            <div class="detalle-habilidad">
+              <ul class="etiquetas-tech">
+                <li>PHP</li>
+                <li>MySQL</li>
+                <li>phpMyAdmin</li>
+                <li>Consultas SQL</li>
+              </ul>
+              <p>Creación de tablas en MySQL, conexión con <code>mysqli</code> y guardado de datos enviados desde formularios web.</p>
+            </div>
+          </div>
+
+          <div class="fila-habilidad">
+            <div class="area-habilidad">
+              <h3>Publicación y Control</h3>
+              <span>Herramientas de trabajo</span>
+            </div>
+            <div class="detalle-habilidad">
+              <ul class="etiquetas-tech">
+                <li>Git</li>
+                <li>GitHub Pages</li>
+                <li>InfinityFree</li>
+                <li>VS Code</li>
+              </ul>
+              <p>Manejo de repositorios en GitHub y subida de archivos por FTP/gestor web a InfinityFree para proyectos con PHP y MySQL.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Galeria -->
+    <section id="galeria" class="seccion seccion-alterna">
+      <div class="contenedor">
+        <div class="encabezado-galeria">
+          <div>
+            <span class="numero-seccion">Galería</span>
+            <h2>Proyectos y prácticas del curso</h2>
+            <p class="subtitulo-seccion">
+              Algunos de los trabajos que realicé en clase. Haz clic en las imágenes para verlas más grandes.
+            </p>
+          </div>
+
+          <div class="filtros-galeria" role="group" aria-label="Filtrar proyectos">
+            <button type="button" class="boton-filtro activo" data-filtro="todos" aria-pressed="true">Todos</button>
+            <button type="button" class="boton-filtro" data-filtro="api" aria-pressed="false">API / JS</button>
+            <button type="button" class="boton-filtro" data-filtro="interfaz" aria-pressed="false">Interfaces Web</button>
+            <button type="button" class="boton-filtro" data-filtro="datos" aria-pressed="false">Base de Datos</button>
+          </div>
+        </div>
+
+        <div class="lista-proyectos" id="contenedorGaleria">
+
+          <!-- Proyecto 1 -->
+          <article class="proyecto-item" data-categoria="api">
+            <div class="proyecto-imagen-contenedor">
+              <img
+                src="img/web.jpg"
+                alt="Proyecto Clima Perú con API Open-Meteo"
+                class="proyecto-img"
+                data-titulo="Clima Perú (Consumo de API Open-Meteo)"
+                data-desc="Práctica de laboratorio hecha con HTML, CSS y JavaScript para consultar en vivo la temperatura, humedad y viento de varias ciudades del Perú (Lima, Cusco, Arequipa, Trujillo, Piura, Iquitos, Puno y Huancayo)."
+                loading="lazy"
+              >
+              <button type="button" class="boton-ampliar" aria-label="Ampliar imagen de Clima Perú">
+                Ver imagen
+              </button>
+            </div>
+            <div class="proyecto-contenido">
+              <div class="proyecto-meta">
+                <span class="etiqueta-categoria">JavaScript / Fetch API</span>
+                <span class="fecha-proyecto">Laboratorio</span>
+              </div>
+              <h3>App del Clima Perú</h3>
+              <p>
+                Consulta el clima actual en distintas ciudades del Perú conectándose a la API pública de Open-Meteo mediante <code>fetch()</code> y mostrando la respuesta en tarjetas dinámicas.
+              </p>
+              <div class="proyecto-acciones">
+                <a href="https://alexisurbano-dotcom.github.io/api_clima_peru/" target="_blank" rel="noopener noreferrer" class="enlace-proyecto">
+                  Probar demo en GitHub Pages
+                </a>
+                <button type="button" class="enlace-secundario btn-ver-detalle">
+                  Ampliar captura
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Proyecto 2 -->
+          <article class="proyecto-item" data-categoria="interfaz">
+            <div class="proyecto-imagen-contenedor">
+              <img
+                src="img/proyecto-ceande.png"
+                alt="Captura de la web Club Campestre CEANDE Chosica"
+                class="proyecto-img"
+                data-titulo="Web y Cotizador: Club Campestre CEANDE (Chosica)"
+                data-desc="Página adaptable con sección de bungalows, tabla comparativa de entradas Full Day y una calculadora en JavaScript que arma el presupuesto según las noches y envía el pedido por WhatsApp."
+                loading="lazy"
+              >
+              <button type="button" class="boton-ampliar" aria-label="Ampliar imagen de Club CEANDE">
+                Ver imagen
+              </button>
+            </div>
+            <div class="proyecto-contenido">
+              <div class="proyecto-meta">
+                <span class="etiqueta-categoria">HTML5 / CSS3 / JS</span>
+                <span class="fecha-proyecto">Diseño de Interfaces</span>
+              </div>
+              <h3>Web y Cotizador - Club CEANDE Chosica</h3>
+              <p>
+                Página web adaptable con catálogo de cabañas, cuadro de tarifas Full Day y una calculadora en JavaScript para estimar el costo de reserva en tiempo real.
+              </p>
+              <div class="proyecto-acciones">
+                <button type="button" class="enlace-proyecto btn-ver-detalle">
+                  Ver captura completa
+                </button>
+                <a href="#contactos" class="enlace-secundario">
+                  Preguntar por este proyecto
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Proyecto 3 -->
+          <article class="proyecto-item" data-categoria="interfaz">
+            <div class="proyecto-imagen-contenedor">
+              <img
+                src="img/proyecto-academia.jpg"
+                alt="Sitio web Academia Triunfadores"
+                class="proyecto-img"
+                data-titulo="Sitio Web Multipágina: Academia Triunfadores"
+                data-desc="Trabajo de maquetación con 5 páginas enlazadas (Inicio, Nosotros, Galería, Contactos y Login), slider de portada, galería de fotos y diseño adaptado a celulares."
+                loading="lazy"
+              >
+              <button type="button" class="boton-ampliar" aria-label="Ampliar imagen de Academia Triunfadores">
+                Ver imagen
+              </button>
+            </div>
+            <div class="proyecto-contenido">
+              <div class="proyecto-meta">
+                <span class="etiqueta-categoria">HTML5 / CSS3 / Slider</span>
+                <span class="fecha-proyecto">Práctica de clase</span>
+              </div>
+              <h3>Portal Web Academia Triunfadores</h3>
+              <p>
+                Sitio web multipágina con menú adaptable, carrusel en la portada, galería de imágenes con visor y páginas internas de contacto y login.
+              </p>
+              <div class="proyecto-acciones">
+                <button type="button" class="enlace-proyecto btn-ver-detalle">
+                  Ver captura completa
+                </button>
+                <a href="#contactos" class="enlace-secundario">
+                  Preguntar por este proyecto
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Proyecto 4 -->
+          <article class="proyecto-item" data-categoria="datos">
+            <div class="proyecto-imagen-contenedor">
+              <img
+                src="img/excel.jpg"
+                alt="Registro de datos con PHP y MySQL"
+                class="proyecto-img"
+                data-titulo="Integración de Formularios con PHP y MySQL"
+                data-desc="Conexión de formularios HTML con una base de datos MySQL en InfinityFree usando PHP (mysqli) para guardar nuevos registros y listarlos en una tabla."
+                loading="lazy"
+              >
+              <button type="button" class="boton-ampliar" aria-label="Ampliar imagen de Base de Datos">
+                Ver imagen
+              </button>
+            </div>
+            <div class="proyecto-contenido">
+              <div class="proyecto-meta">
+                <span class="etiqueta-categoria">PHP / MySQL</span>
+                <span class="fecha-proyecto">Integración BD</span>
+              </div>
+              <h3>Registro de Contactos en MySQL</h3>
+              <p>
+                Conexión entre el frontend y una base de datos MySQL mediante scripts en PHP para validar, guardar y consultar los mensajes enviados por los usuarios.
+              </p>
+              <div class="proyecto-acciones">
+                <a href="ver_contactos.php" class="enlace-proyecto">
+                  Ver tabla de registros BD
+                </a>
+                <button type="button" class="enlace-secundario btn-ver-detalle">
+                  Ampliar captura
+                </button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section id="testimonios" class="seccion">
+      <div class="contenedor">
+        <div class="encabezado-seccion">
+          <span class="numero-seccion">Testimonios</span>
+          <h2>Comentarios de compañeros y curso</h2>
+          <p class="subtitulo-seccion">
+            Referencias sobre el trabajo compartido en los laboratorios de Diseño y Desarrollo de Sistemas.
+          </p>
+        </div>
+
+        <div class="lista-testimonios">
+          <!-- Compañero 1 -->
+          <blockquote class="cita-testimonio">
+            <p class="cita-texto">
+              "Hemos hecho varios laboratorios juntos en la carrera. Alexis es bien ordenado con su código CSS y siempre nos damos una mano cuando toca ajustar el diseño para celulares o revisar algún detalle en JavaScript."
+            </p>
+            <footer class="cita-autor">
+              <div class="iniciales-autor" aria-hidden="true">SI</div>
+              <div>
+                <cite class="nombre-autor">Sebastián Idrugo Vilca</cite>
+                <span class="cargo-autor">Compañero de carrera - Diseño y Desarrollo de Sistemas</span>
+              </div>
+            </footer>
+          </blockquote>
+
+          <!-- Compañero 2 -->
+          <blockquote class="cita-testimonio">
+            <p class="cita-texto">
+              "Compartimos el curso de Diseño de Interfaces este ciclo. Algo que destaco de Alexis es que no se queda solo con la maqueta: siempre prueba que los formularios, la base de datos y el hosting en InfinityFree funcionen bien antes de entregar."
+            </p>
+            <footer class="cita-autor">
+              <div class="iniciales-autor" aria-hidden="true">JR</div>
+              <div>
+                <cite class="nombre-autor">Jefferson Rivera</cite>
+                <span class="cargo-autor">Compañero de aula - Curso de Diseño de Interfaces</span>
+              </div>
+            </footer>
+          </blockquote>
+
+          <!-- Referencia del curso / Docente -->
+          <blockquote class="cita-testimonio cita-docente">
+            <p class="cita-texto">
+              "Portafolio desarrollado siguiendo los criterios trabajados en las sesiones del curso: maquetación adaptable a distintos dispositivos, uso de buenas prácticas en HTML5, CSS3 y JavaScript, y conexión funcional con base de datos."
+            </p>
+            <footer class="cita-autor">
+              <div class="iniciales-autor" aria-hidden="true">MP</div>
+              <div>
+                <cite class="nombre-autor">Miguel Pallín</cite>
+                <span class="cargo-autor">Docente del curso Diseño de Interfaces | <a href="https://miguelpallin.com" target="_blank" rel="noopener noreferrer">miguelpallin.com</a></span>
+              </div>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contactos -->
+    <section id="contactos" class="seccion seccion-alterna">
+      <div class="contenedor contacto-layout">
+
+        <div class="contacto-info">
+          <span class="numero-seccion">Contactos</span>
+          <h2>Envíame un mensaje</h2>
+          <p class="subtitulo-seccion">
+            Puedes escribirme usando el formulario. Los datos se guardan directamente en la base de datos MySQL del servidor.
+          </p>
+
+          <dl class="datos-contacto">
+            <div class="dato-item">
+              <dt>Autor</dt>
+              <dd>Alexis Uriel Urbano Elorriaga</dd>
+            </div>
+            <div class="dato-item">
+              <dt>Correo</dt>
+              <dd><a href="mailto:alexis.urbano@tecsup.edu.pe">alexis.urbano@tecsup.edu.pe</a></dd>
+            </div>
+            <div class="dato-item">
+              <dt>GitHub</dt>
+              <dd>
+                <a href="https://github.com/alexisurbano-dotcom" target="_blank" rel="noopener noreferrer">
+                  github.com/alexisurbano-dotcom
+                </a>
+              </dd>
+            </div>
+            <div class="dato-item">
+              <dt>Web del docente</dt>
+              <dd>
+                <a href="https://miguelpallin.com" target="_blank" rel="noopener noreferrer">
+                  miguelpallin.com
+                </a>
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="contacto-formulario-caja">
+          <div class="encabezado-form">
+            <h3>Formulario de contacto</h3>
+            <p>Completa los campos para registrar tu mensaje en la tabla <code>contactos</code> de MySQL.</p>
+          </div>
+
+          <form id="formularioContacto" action="guardar_contacto.php" method="POST" novalidate>
+            <div class="form-fila-doble">
+              <div class="campo-form">
+                <label for="nombre">Nombre completo *</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre y apellido" required minlength="2" maxlength="100">
+              </div>
+
+              <div class="campo-form">
+                <label for="correo">Correo electrónico *</label>
+                <input type="email" id="correo" name="correo" placeholder="tucorreo@ejemplo.com" required maxlength="150">
+              </div>
+            </div>
+
+            <div class="form-fila-doble">
+              <div class="campo-form">
+                <label for="telefono">Teléfono / Celular</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="Opcional" maxlength="30">
+              </div>
+
+              <div class="campo-form">
+                <label for="asunto">Asunto *</label>
+                <select id="asunto" name="asunto" required>
+                  <option value="">Selecciona un asunto</option>
+                  <option value="Consulta sobre un proyecto">Consulta sobre un proyecto</option>
+                  <option value="Diseño de Interfaces">Curso Diseño de Interfaces</option>
+                  <option value="Desarrollo Web">Desarrollo Web</option>
+                  <option value="Otro motivo">Otro motivo</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="campo-form">
+              <label for="mensaje">Mensaje *</label>
+              <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required minlength="5" maxlength="2000"></textarea>
+            </div>
+
+            <button type="submit" id="btnEnviar" class="boton boton-primario boton-ancho">
+              <span id="btnTexto">Enviar mensaje</span>
+              <span id="btnSpinner" class="indicador-carga oculto" aria-hidden="true"></span>
+            </button>
+
+            <div id="alertaExito" class="mensaje-estado estado-exito oculto" role="status" aria-live="polite">
+              <strong id="tituloExito">Mensaje guardado</strong>
+              <p id="textoExito"></p>
+            </div>
+
+            <div id="alertaError" class="mensaje-estado estado-error oculto" role="alert">
+              <strong id="tituloError">Hubo un problema</strong>
+              <p id="textoError"></p>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Pie de página -->
+  <footer class="pie-pagina">
+    <div class="contenedor pie-layout">
+      <div>
+        <strong>Alexis Uriel Urbano Elorriaga</strong>
+        <p>Diseño y Desarrollo de Sistemas - Curso: Diseño de Interfaces (Docente: Miguel Pallín)</p>
+      </div>
+      <div class="pie-enlaces">
+        <a href="ver_contactos.php">Ver registros BD</a>
+        <a href="https://github.com/alexisurbano-dotcom" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="#inicio">Subir</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal para ver imagen ampliada -->
+  <dialog id="visorGaleria" class="visor-dialogo" aria-labelledby="visorTitulo">
+    <div class="visor-cabecera">
+      <h3 id="visorTitulo">Vista del proyecto</h3>
+      <button type="button" id="btnCerrarVisor" class="visor-cerrar" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="visor-cuerpo">
+      <img id="visorImagen" src="img/web.jpg" alt="">
+    </div>
+    <div class="visor-pie">
+      <p id="visorDescripcion"></p>
+    </div>
+  </dialog>
+
+  <script src="app.js?v=4"></script>
+</body>
+</html>

@@ -1,8 +1,7 @@
 /* ==========================================================================
-   Portafolio Académico — Alexis Uriel Urbano Elorriaga
+   Portafolio Web - Alexis Uriel Urbano Elorriaga
    Carrera: Diseño y Desarrollo de Sistemas (Tecsup)
    Curso: Diseño de Interfaces | Docente: Miguel Pallín
-   Estilos escritos en CSS3 puro, sin librerías externas.
    ========================================================================== */
 
 :root {
@@ -134,6 +133,7 @@ code {
   font-weight: 800;
   letter-spacing: -0.5px;
   color: var(--texto-principal);
+  white-space: nowrap;
 }
 
 .marca span {
@@ -393,7 +393,7 @@ h3 {
   text-align: right;
 }
 
-/* 5. Sección Nosotros / Sobre mí (Layout editorial en 2 columnas) */
+/* 5. Sección Nosotros / Sobre mí */
 .sobre-layout {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -439,7 +439,7 @@ h3 {
   color: var(--texto-secundario);
 }
 
-/* 6. Sección Habilidades (Tabla estructurada por áreas, sin barras de porcentaje) */
+/* 6. Sección Habilidades */
 .tabla-habilidades {
   border-top: 1px solid var(--borde-fuerte);
 }
@@ -647,7 +647,7 @@ h3 {
   color: var(--texto-principal);
 }
 
-/* 8. Sección Testimonios (Citas editoriales sin estrellas falsas) */
+/* 8. Sección Testimonios */
 .lista-testimonios {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

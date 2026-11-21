@@ -1,23 +1,25 @@
 <?php
 /**
- * PANEL PARA VISUALIZAR LOS MENSAJES GUARDADOS EN LA BASE DE DATOS MYSQL
+ * LISTADO DE CONTACTOS REGISTRADOS EN MYSQL
  * Autor: Alexis Uriel Urbano Elorriaga
- * Carrera: Diseño y Desarrollo de Sistemas (Tecsup)
- * Curso: Diseño de Interfaces | Docente: Miguel Pallín
+ * Curso: Diseño de Interfaces - Docente: Miguel Pallín
  */
 require_once __DIR__ . '/conexion.php';
 
 $registros = [];
-$errorConexion = null;
+$errorBd = '';
 
 if ($conexion->connect_error) {
-    $errorConexion = $conexion->connect_error;
+    $errorBd = 'No se pudo conectar a la base de datos: ' . $conexion->connect_error;
 } else {
     $resultado = $conexion->query("SELECT id, nombre, correo, telefono, asunto, mensaje, fecha FROM contactos ORDER BY id DESC");
     if ($resultado) {
         while ($fila = $resultado->fetch_assoc()) {
             $registros[] = $fila;
         }
+        $resultado->free();
+    } else {
+        $errorBd = 'Error al consultar la tabla contactos: ' . $conexion->error;
     }
 }
 ?>
@@ -26,114 +28,101 @@ if ($conexion->connect_error) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registros MySQL — Alexis Uriel Urbano Elorriaga</title>
-  <link rel="stylesheet" href="style.css?v=3">
+  <title>Registros de Contacto | Alexis Urbano</title>
+  <link rel="stylesheet" href="style.css?v=4">
   <style>
-    .contenedor-tabla {
+    .tabla-contenedor {
       overflow-x: auto;
-      background-color: var(--fondo-blanco);
+      background: var(--fondo-blanco);
       border: 1px solid var(--borde);
       border-radius: 6px;
+      margin-top: 24px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      text-align: left;
       font-size: 0.92rem;
     }
     th, td {
-      padding: 14px 16px;
+      padding: 12px 16px;
+      text-align: left;
       border-bottom: 1px solid var(--borde);
       vertical-align: top;
     }
     th {
       background-color: var(--fondo-alterno);
-      font-family: var(--fuente-mono);
-      font-size: 0.78rem;
+      font-weight: 700;
+      font-size: 0.82rem;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
       color: var(--texto-secundario);
     }
     tr:last-child td {
       border-bottom: none;
     }
-    .cabecera-vista {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-bottom: 32px;
-    }
   </style>
 </head>
 <body>
-
   <header class="cabecera">
     <div class="contenedor barra-nav">
       <a class="marca" href="index.html">Alexis Urbano<span>.</span></a>
-      <a href="index.html#contactos" class="boton boton-secundario">← Volver al portafolio</a>
+      <nav class="navegacion">
+        <a href="index.html#inicio" class="nav-enlace">Volver al portafolio</a>
+        <a href="index.html#contactos" class="nav-enlace nav-contacto">Nuevo mensaje</a>
+      </nav>
     </div>
   </header>
 
   <main class="seccion">
     <div class="contenedor">
-      <div class="cabecera-vista">
-        <div>
-          <span class="numero-seccion">BASE DE DATOS MYSQL · INFINITYFREE</span>
-          <h2>Registros de la tabla <code>contactos</code></h2>
-          <p class="subtitulo-seccion">
-            Base de datos: <code>if0_43500630_portafolio</code> · Total: <strong><?= count($registros) ?></strong> mensaje(s)
-          </p>
-        </div>
-        <a href="index.html#contactos" class="boton boton-primario">Registrar nuevo mensaje</a>
+      <div class="encabezado-seccion">
+        <span class="numero-seccion">Base de datos MySQL</span>
+        <h1>Mensajes registrados en la tabla contactos</h1>
+        <p class="subtitulo-seccion">
+          Vista de comprobación de los datos enviados desde el formulario de contacto.
+        </p>
       </div>
 
-      <?php if ($errorConexion): ?>
+      <?php if ($errorBd !== ''): ?>
         <div class="mensaje-estado estado-error">
-          <strong>Error de conexión con MySQL</strong>
-          <p>Detalle: <code><?= htmlspecialchars($errorConexion) ?></code>. Verifica las credenciales en <code>conexion.php</code>.</p>
+          <strong>Error de conexión</strong>
+          <p><?php echo htmlspecialchars($errorBd, ENT_QUOTES, 'UTF-8'); ?></p>
+        </div>
+      <?php elseif (empty($registros)): ?>
+        <div class="mensaje-estado estado-exito">
+          <strong>Sin registros todavía</strong>
+          <p>La conexión con MySQL está activa, pero aún no se han enviado mensajes desde el formulario.</p>
         </div>
       <?php else: ?>
-        <div class="contenedor-tabla">
+        <div class="tabla-contenedor">
           <table>
             <thead>
               <tr>
-                <th>#ID</th>
+                <th>#</th>
                 <th>Nombre</th>
                 <th>Correo</th>
                 <th>Teléfono</th>
-                <th>Motivo</th>
+                <th>Asunto</th>
                 <th>Mensaje</th>
                 <th>Fecha</th>
               </tr>
             </thead>
             <tbody>
-              <?php if (empty($registros)): ?>
+              <?php foreach ($registros as $item): ?>
                 <tr>
-                  <td colspan="7" style="text-align: center; padding: 32px; color: var(--texto-secundario);">
-                    Aún no hay mensajes registrados en la tabla. Envía una prueba desde el formulario de contacto.
-                  </td>
+                  <td><?php echo (int)$item['id']; ?></td>
+                  <td><strong><?php echo htmlspecialchars($item['nombre'], ENT_QUOTES, 'UTF-8'); ?></strong></td>
+                  <td><?php echo htmlspecialchars($item['correo'], ENT_QUOTES, 'UTF-8'); ?></td>
+                  <td><?php echo htmlspecialchars($item['telefono'] ?: '-', ENT_QUOTES, 'UTF-8'); ?></td>
+                  <td><?php echo htmlspecialchars($item['asunto'], ENT_QUOTES, 'UTF-8'); ?></td>
+                  <td><?php echo nl2br(htmlspecialchars($item['mensaje'], ENT_QUOTES, 'UTF-8')); ?></td>
+                  <td><?php echo htmlspecialchars($item['fecha'], ENT_QUOTES, 'UTF-8'); ?></td>
                 </tr>
-              <?php else: ?>
-                <?php foreach ($registros as $fila): ?>
-                  <tr>
-                    <td><strong><?= (int)$fila['id'] ?></strong></td>
-                    <td><?= htmlspecialchars($fila['nombre']) ?></td>
-                    <td><a href="mailto:<?= htmlspecialchars($fila['correo']) ?>" style="text-decoration: underline; color: var(--acento);"><?= htmlspecialchars($fila['correo']) ?></a></td>
-                    <td><?= htmlspecialchars($fila['telefono'] ?: '-') ?></td>
-                    <td><code><?= htmlspecialchars($fila['asunto']) ?></code></td>
-                    <td><?= nl2br(htmlspecialchars($fila['mensaje'])) ?></td>
-                    <td style="font-family: var(--fuente-mono); font-size: 0.8rem; color: var(--texto-suave); white-space: nowrap;"><?= htmlspecialchars($fila['fecha']) ?></td>
-                  </tr>
-                <?php endforeach; ?>
-              <?php endif; ?>
+              <?php endforeach; ?>
             </tbody>
           </table>
         </div>
       <?php endif; ?>
     </div>
   </main>
-
 </body>
 </html>
