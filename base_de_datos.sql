@@ -21,6 +21,6 @@ VALUES (
   'Miguel Pallín',
   'contacto@miguelpallin.com',
   '999888777',
-  'Evaluación Nota 03 y Nota 04',
+  'Consulta sobre un proyecto',
   'Prueba de verificación del formulario de contactos conectado a la base de datos MySQL en InfinityFree.'
 );

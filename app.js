@@ -1,111 +1,159 @@
 /**
- * Portafolio Personalizado - Alexis Uriel Urbano Elorriaga
+ * Portafolio Académico — Alexis Uriel Urbano Elorriaga
+ * Carrera: Diseño y Desarrollo de Sistemas (Tecsup)
  * Curso: Diseño de Interfaces | Docente: Miguel Pallín
- * Funcionalidades:
- *  1. Navegación activa por sección y cierre automático en móvil
- *  2. Filtro dinámico de proyectos en la sección Galería
- *  3. Modal / Visor de imágenes ampliadas en la Galería
- *  4. Envío y validación del Formulario de Contactos (conectado a guardar_contacto.php + MySQL)
+ *
+ * Código escrito en JavaScript puro (Vanilla JS), sin librerías externas:
+ *  1. Menú de navegación adaptable a móviles
+ *  2. Indicador de sección activa al desplazarse (IntersectionObserver)
+ *  3. Filtro de proyectos por categoría en la sección Galería
+ *  4. Visor de imágenes ampliadas con el elemento nativo <dialog>
+ *  5. Validación y envío del formulario de contacto a MySQL (guardar_contacto.php) + copia al correo
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Inicializa automáticamente la tabla en la base de datos MySQL de InfinityFree al abrir la página
+  // Asegura que la tabla 'contactos' exista en MySQL al cargar en InfinityFree
   fetch('ver_contactos.php', { method: 'GET' }).catch(() => {});
 
   /* =========================================================================
-     1. NAVEGACIÓN ACTIVA Y CIERRE DE MENÚ MÓVIL
+     1. MENÚ MÓVIL ACCESIBLE
      ========================================================================= */
-  const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-  const navCollapseEl = document.getElementById('navMenu');
+  const btnMenu = document.getElementById('btnMenu');
+  const menuPrincipal = document.getElementById('menuPrincipal');
+  const enlacesNav = document.querySelectorAll('.navegacion .nav-enlace');
 
-  navLinks.forEach((link) => {
-    link.addEventListener('click', () => {
-      if (navCollapseEl && navCollapseEl.classList.contains('show')) {
-        const bsCollapse = bootstrap.Collapse.getInstance(navCollapseEl);
-        if (bsCollapse) bsCollapse.hide();
+  const cerrarMenu = () => {
+    if (!menuPrincipal || !btnMenu) return;
+    menuPrincipal.classList.remove('abierto');
+    btnMenu.setAttribute('aria-expanded', 'false');
+    btnMenu.setAttribute('aria-label', 'Abrir menú de navegación');
+  };
+
+  if (btnMenu && menuPrincipal) {
+    btnMenu.addEventListener('click', () => {
+      const estaAbierto = menuPrincipal.classList.toggle('abierto');
+      btnMenu.setAttribute('aria-expanded', String(estaAbierto));
+      btnMenu.setAttribute(
+        'aria-label',
+        estaAbierto ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'
+      );
+    });
+
+    enlacesNav.forEach((enlace) => {
+      enlace.addEventListener('click', cerrarMenu);
+    });
+
+    document.addEventListener('keydown', (evento) => {
+      if (evento.key === 'Escape') {
+        cerrarMenu();
       }
     });
-  });
+  }
 
-  const secciones = document.querySelectorAll('header[id], section[id]');
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const idActual = entry.target.getAttribute('id');
-            navLinks.forEach((link) => {
-              link.classList.toggle('active', link.getAttribute('href') === `#${idActual}`);
-            });
-          }
+  /* =========================================================================
+     2. RESALTADO DE SECCIÓN ACTIVA EN LA NAVEGACIÓN
+     ========================================================================= */
+  const secciones = document.querySelectorAll('main > section[id]');
+
+  if ('IntersectionObserver' in window && secciones.length > 0) {
+    const observadorSecciones = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((entrada) => {
+          if (!entrada.isIntersecting) return;
+          const idVisible = entrada.target.getAttribute('id');
+
+          enlacesNav.forEach((enlace) => {
+            const coincide = enlace.getAttribute('href') === `#${idVisible}`;
+            enlace.classList.toggle('activo', coincide);
+          });
         });
       },
       { rootMargin: '-20% 0px -60% 0px', threshold: 0 }
     );
 
-    secciones.forEach((sec) => observer.observe(sec));
+    secciones.forEach((seccion) => observadorSecciones.observe(seccion));
   }
 
   /* =========================================================================
-     2. FILTRO DINÁMICO DE LA SECCIÓN GALERÍA
+     3. FILTRO DE PROYECTOS EN LA GALERÍA
      ========================================================================= */
-  const botonesFiltro = document.querySelectorAll('.filtro-btn');
-  const itemsGaleria = document.querySelectorAll('.item-galeria');
+  const botonesFiltro = document.querySelectorAll('.boton-filtro');
+  const proyectos = document.querySelectorAll('.proyecto-item');
 
   botonesFiltro.forEach((boton) => {
     boton.addEventListener('click', () => {
-      const filtro = boton.getAttribute('data-filtro');
+      const categoriaSeleccionada = boton.getAttribute('data-filtro');
 
-      botonesFiltro.forEach((b) => b.classList.remove('active'));
-      boton.classList.add('active');
+      botonesFiltro.forEach((b) => {
+        const esActivo = b === boton;
+        b.classList.toggle('activo', esActivo);
+        b.setAttribute('aria-pressed', String(esActivo));
+      });
 
-      itemsGaleria.forEach((item) => {
-        const categoria = item.getAttribute('data-categoria');
-        if (filtro === 'todos' || categoria === filtro) {
-          item.classList.remove('d-none');
-        } else {
-          item.classList.add('d-none');
-        }
+      proyectos.forEach((proyecto) => {
+        const categoriaProyecto = proyecto.getAttribute('data-categoria');
+        const mostrar =
+          categoriaSeleccionada === 'todos' || categoriaProyecto === categoriaSeleccionada;
+
+        proyecto.classList.toggle('oculto', !mostrar);
       });
     });
   });
 
   /* =========================================================================
-     3. VISOR MODAL DE IMÁGENES EN GALERÍA
+     4. VISOR DE IMÁGENES AMPLIADAS (<dialog>)
      ========================================================================= */
-  const modalElement = document.getElementById('modalGaleria');
-  const modalImg = document.getElementById('modalGaleriaImg');
-  const modalTitulo = document.getElementById('modalGaleriaTitulo');
-  const modalDesc = document.getElementById('modalGaleriaDesc');
+  const visorDialogo = document.getElementById('visorGaleria');
+  const visorImagen = document.getElementById('visorImagen');
+  const visorTitulo = document.getElementById('visorTitulo');
+  const visorDescripcion = document.getElementById('visorDescripcion');
+  const btnCerrarVisor = document.getElementById('btnCerrarVisor');
 
-  if (modalElement) {
-    const bsModal = new bootstrap.Modal(modalElement);
-
-    const abrirVisor = (card) => {
-      const img = card.querySelector('.galeria-img');
+  if (visorDialogo && typeof visorDialogo.showModal === 'function') {
+    const abrirVisor = (articuloProyecto) => {
+      const img = articuloProyecto.querySelector('.proyecto-img');
       if (!img) return;
-      modalImg.src = img.src;
-      modalImg.alt = img.alt;
-      modalTitulo.textContent = img.getAttribute('data-titulo') || 'Vista Previa';
-      modalDesc.textContent = img.getAttribute('data-desc') || '';
-      bsModal.show();
+
+      visorImagen.src = img.src;
+      visorImagen.alt = img.alt;
+      visorTitulo.textContent = img.getAttribute('data-titulo') || 'Vista del proyecto';
+      visorDescripcion.textContent = img.getAttribute('data-desc') || '';
+      visorDialogo.showModal();
     };
 
-    document.querySelectorAll('.galeria-card').forEach((card) => {
-      const imgBox = card.querySelector('.galeria-img-box');
-      const btnModal = card.querySelector('.btn-ver-modal');
+    proyectos.forEach((articulo) => {
+      const contenedorImg = articulo.querySelector('.proyecto-imagen-contenedor');
+      const btnDetalle = articulo.querySelector('.btn-ver-detalle');
 
-      if (imgBox) {
-        imgBox.addEventListener('click', () => abrirVisor(card));
+      if (contenedorImg) {
+        contenedorImg.addEventListener('click', () => abrirVisor(articulo));
       }
-      if (btnModal) {
-        btnModal.addEventListener('click', () => abrirVisor(card));
+      if (btnDetalle) {
+        btnDetalle.addEventListener('click', () => abrirVisor(articulo));
+      }
+    });
+
+    if (btnCerrarVisor) {
+      btnCerrarVisor.addEventListener('click', () => visorDialogo.close());
+    }
+
+    // Cerrar al hacer clic fuera de la ventana del diálogo
+    visorDialogo.addEventListener('click', (evento) => {
+      const rect = visorDialogo.getBoundingClientRect();
+      const clicFuera =
+        evento.clientX < rect.left ||
+        evento.clientX > rect.right ||
+        evento.clientY < rect.top ||
+        evento.clientY > rect.bottom;
+
+      if (clicFuera) {
+        visorDialogo.close();
       }
     });
   }
 
   /* =========================================================================
-     4. FORMULARIO DE CONTACTOS FUNCIONAL (CONECTADO A PHP + MYSQL)
+     5. FORMULARIO DE CONTACTO (CONEXIÓN MYSQL + COPIA AL CORREO)
      ========================================================================= */
   const formulario = document.getElementById('formularioContacto');
   const alertaExito = document.getElementById('alertaExito');
@@ -118,29 +166,52 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSpinner = document.getElementById('btnSpinner');
 
   if (formulario) {
-    formulario.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    const camposRequeridos = formulario.querySelectorAll('[required]');
 
-      alertaExito.classList.add('d-none');
-      alertaError.classList.add('d-none');
+    camposRequeridos.forEach((campo) => {
+      campo.addEventListener('input', () => {
+        campo.classList.remove('campo-invalido');
+      });
+    });
 
-      // Validación HTML5 + Bootstrap
-      if (!formulario.checkValidity()) {
-        formulario.classList.add('was-validated');
-        textoError.textContent = 'Por favor revisa y completa todos los campos obligatorios (*).';
-        alertaError.classList.remove('d-none');
+    formulario.addEventListener('submit', async (evento) => {
+      evento.preventDefault();
+
+      alertaExito.classList.add('oculto');
+      alertaError.classList.add('oculto');
+
+      const inputNombre = document.getElementById('nombre');
+      const inputCorreo = document.getElementById('correo');
+      const inputMensaje = document.getElementById('mensaje');
+
+      if (inputNombre) inputNombre.value = inputNombre.value.trim();
+      if (inputCorreo) inputCorreo.value = inputCorreo.value.trim();
+      if (inputMensaje) inputMensaje.value = inputMensaje.value.trim();
+
+      // Validar campos obligatorios
+      let formularioValido = true;
+      camposRequeridos.forEach((campo) => {
+        if (!campo.checkValidity()) {
+          campo.classList.add('campo-invalido');
+          formularioValido = false;
+        } else {
+          campo.classList.remove('campo-invalido');
+        }
+      });
+
+      if (!formularioValido) {
+        textoError.textContent = 'Revisa los campos marcados en rojo. Asegúrate de ingresar un nombre, un correo válido, el motivo y un mensaje.';
+        alertaError.classList.remove('oculto');
         return;
       }
 
-      formulario.classList.remove('was-validated');
-
-      // Estado de carga
+      // Mostrar estado de carga
       btnEnviar.disabled = true;
-      btnTexto.textContent = 'Guardando en Base de Datos...';
-      btnSpinner.classList.remove('d-none');
+      btnTexto.textContent = 'Guardando en base de datos...';
+      btnSpinner.classList.remove('oculto');
 
       const formData = new FormData(formulario);
-      const registroLocal = {
+      const datosMensaje = {
         nombre: formData.get('nombre'),
         correo: formData.get('correo'),
         telefono: formData.get('telefono') || '-',
@@ -149,14 +220,14 @@ document.addEventListener('DOMContentLoaded', () => {
         fecha: new Date().toLocaleString('es-PE')
       };
 
-      // Guardar también en localStorage como respaldo
+      // Respaldo local en el navegador
       try {
         const historial = JSON.parse(localStorage.getItem('contactos_portafolio') || '[]');
-        historial.unshift(registroLocal);
+        historial.unshift(datosMensaje);
         localStorage.setItem('contactos_portafolio', JSON.stringify(historial));
       } catch (_) {}
 
-      // 1. Enviar copia al correo institucional (alexis.urbano@tecsup.edu.pe) vía FormSubmit AJAX
+      // 1. Envío de copia al correo institucional (alexis.urbano@tecsup.edu.pe)
       fetch('https://formsubmit.co/ajax/alexis.urbano@tecsup.edu.pe', {
         method: 'POST',
         headers: {
@@ -164,54 +235,56 @@ document.addEventListener('DOMContentLoaded', () => {
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          _subject: `Nuevo mensaje del Portafolio: ${registroLocal.asunto}`,
-          Nombre: registroLocal.nombre,
-          Correo: registroLocal.correo,
-          Telefono: registroLocal.telefono,
-          Asunto: registroLocal.asunto,
-          Mensaje: registroLocal.mensaje,
-          Fecha: registroLocal.fecha
+          _subject: `Mensaje desde tu Portafolio: ${datosMensaje.asunto}`,
+          Nombre: datosMensaje.nombre,
+          Correo: datosMensaje.correo,
+          Telefono: datosMensaje.telefono,
+          Motivo: datosMensaje.asunto,
+          Mensaje: datosMensaje.mensaje,
+          Fecha: datosMensaje.fecha
         })
       }).catch(() => {});
 
-      // 2. Guardar en la Base de Datos MySQL de InfinityFree (guardar_contacto.php)
+      // 2. Guardado en la base de datos MySQL en InfinityFree (guardar_contacto.php)
       try {
-        const response = await fetch(formulario.action, {
+        const respuesta = await fetch(formulario.action, {
           method: 'POST',
           body: formData
         });
 
-        let data = null;
-        const contentType = response.headers.get('content-type') || '';
-        if (contentType.includes('application/json')) {
-          data = await response.json();
+        let resultado = null;
+        const tipoContenido = respuesta.headers.get('content-type') || '';
+        if (tipoContenido.includes('application/json')) {
+          resultado = await respuesta.json();
         }
 
-        if (response.ok && data && data.ok) {
-          tituloExito.textContent = '¡Mensaje guardado en la Base de Datos MySQL!';
-          textoExito.textContent = data.mensaje || `Gracias ${registroLocal.nombre}, tu mensaje fue registrado correctamente.`;
-          alertaExito.classList.remove('d-none');
+        if (respuesta.ok && resultado && resultado.ok) {
+          tituloExito.textContent = 'Mensaje guardado en la base de datos MySQL';
+          textoExito.textContent =
+            resultado.mensaje ||
+            `Gracias, ${datosMensaje.nombre}. Tu mensaje fue registrado correctamente.`;
+          alertaExito.classList.remove('oculto');
           formulario.reset();
-        } else if (data && data.ok === false) {
-          textoError.textContent = data.mensaje || 'Error al guardar en la base de datos. Verifica tus credenciales en conexion.php.';
-          alertaError.classList.remove('d-none');
+        } else if (resultado && resultado.ok === false) {
+          textoError.textContent =
+            resultado.mensaje || 'No se pudo registrar el mensaje en la base de datos.';
+          alertaError.classList.remove('oculto');
         } else {
-          // Respaldo cuando se abre en GitHub Pages o vista local sin servidor PHP
-          tituloExito.textContent = '¡Mensaje enviado y registrado con éxito!';
-          textoExito.textContent = `Gracias ${registroLocal.nombre}. Hemos recibido tu consulta sobre "${registroLocal.asunto}".`;
-          alertaExito.classList.remove('d-none');
+          // Respaldo cuando se abre en GitHub Pages o archivo local sin motor PHP
+          tituloExito.textContent = 'Mensaje enviado correctamente';
+          textoExito.textContent = `Gracias, ${datosMensaje.nombre}. Tu consulta sobre "${datosMensaje.asunto}" ha sido registrada.`;
+          alertaExito.classList.remove('oculto');
           formulario.reset();
         }
-      } catch (error) {
-        // Respaldo si se ejecuta sin servidor PHP activo (ej. GitHub Pages o archivo local)
-        tituloExito.textContent = '¡Mensaje enviado y registrado con éxito!';
-        textoExito.textContent = `Gracias ${registroLocal.nombre}. Tu consulta sobre "${registroLocal.asunto}" ha sido registrada correctamente.`;
-        alertaExito.classList.remove('d-none');
+      } catch (_) {
+        tituloExito.textContent = 'Mensaje enviado correctamente';
+        textoExito.textContent = `Gracias, ${datosMensaje.nombre}. Tu consulta sobre "${datosMensaje.asunto}" ha sido registrada.`;
+        alertaExito.classList.remove('oculto');
         formulario.reset();
       } finally {
         btnEnviar.disabled = false;
-        btnTexto.innerHTML = '<i class="bi bi-send-check me-2"></i>Enviar y Guardar Mensaje';
-        btnSpinner.classList.add('d-none');
+        btnTexto.textContent = 'Enviar y guardar mensaje';
+        btnSpinner.classList.add('oculto');
       }
     });
   }

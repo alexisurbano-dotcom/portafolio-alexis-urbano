@@ -2,6 +2,7 @@
 /**
  * PANEL PARA VISUALIZAR LOS MENSAJES GUARDADOS EN LA BASE DE DATOS MYSQL
  * Autor: Alexis Uriel Urbano Elorriaga
+ * Carrera: Diseño y Desarrollo de Sistemas (Tecsup)
  * Curso: Diseño de Interfaces | Docente: Miguel Pallín
  */
 require_once __DIR__ . '/conexion.php';
@@ -25,43 +26,84 @@ if ($conexion->connect_error) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registros de Contactos (MySQL) | Alexis Uriel Urbano Elorriaga</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <title>Registros MySQL — Alexis Uriel Urbano Elorriaga</title>
+  <link rel="stylesheet" href="style.css?v=3">
+  <style>
+    .contenedor-tabla {
+      overflow-x: auto;
+      background-color: var(--fondo-blanco);
+      border: 1px solid var(--borde);
+      border-radius: 6px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.92rem;
+    }
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--borde);
+      vertical-align: top;
+    }
+    th {
+      background-color: var(--fondo-alterno);
+      font-family: var(--fuente-mono);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--texto-secundario);
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    .cabecera-vista {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+  </style>
 </head>
-<body class="bg-light">
-  <div class="container py-5">
-    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
-      <div>
-        <h2 class="fw-bold mb-1"><i class="bi bi-database-check me-2"></i>Mensajes Guardados en Base de Datos</h2>
-        <p class="text-secondary mb-0">Portafolio de <strong>Alexis Uriel Urbano Elorriaga</strong> · Curso: Diseño de Interfaces</p>
-      </div>
-      <a href="index.html#contactos" class="btn btn-dark rounded-pill px-4">
-        <i class="bi bi-arrow-left me-1"></i> Volver al Portafolio
-      </a>
-    </div>
+<body>
 
-    <?php if ($errorConexion): ?>
-      <div class="alert alert-warning rounded-4 p-4 shadow-sm">
-        <h5 class="fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Pendiente configurar credenciales MySQL en <code>conexion.php</code></h5>
-        <p class="mb-2">Aún no se ha conectado con la base de datos de InfinityFree (Detalle: <code><?= htmlspecialchars($errorConexion) ?></code>).</p>
-        <p class="mb-0 small">Abre el archivo <strong><code>conexion.php</code></strong> y coloca tu <em>Hostname</em>, <em>Username</em>, <em>Password</em> y <em>Database Name</em> del panel de InfinityFree.</p>
-      </div>
-    <?php else: ?>
-      <div class="card border rounded-4 shadow-sm overflow-hidden">
-        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-          <span class="fw-bold">Tabla: <code>contactos</code></span>
-          <span class="badge bg-dark rounded-pill"><?= count($registros) ?> registro(s)</span>
+  <header class="cabecera">
+    <div class="contenedor barra-nav">
+      <a class="marca" href="index.html">Alexis Urbano<span>.</span></a>
+      <a href="index.html#contactos" class="boton boton-secundario">← Volver al portafolio</a>
+    </div>
+  </header>
+
+  <main class="seccion">
+    <div class="contenedor">
+      <div class="cabecera-vista">
+        <div>
+          <span class="numero-seccion">BASE DE DATOS MYSQL · INFINITYFREE</span>
+          <h2>Registros de la tabla <code>contactos</code></h2>
+          <p class="subtitulo-seccion">
+            Base de datos: <code>if0_43500630_portafolio</code> · Total: <strong><?= count($registros) ?></strong> mensaje(s)
+          </p>
         </div>
-        <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0">
-            <thead class="table-light">
+        <a href="index.html#contactos" class="boton boton-primario">Registrar nuevo mensaje</a>
+      </div>
+
+      <?php if ($errorConexion): ?>
+        <div class="mensaje-estado estado-error">
+          <strong>Error de conexión con MySQL</strong>
+          <p>Detalle: <code><?= htmlspecialchars($errorConexion) ?></code>. Verifica las credenciales en <code>conexion.php</code>.</p>
+        </div>
+      <?php else: ?>
+        <div class="contenedor-tabla">
+          <table>
+            <thead>
               <tr>
                 <th>#ID</th>
                 <th>Nombre</th>
                 <th>Correo</th>
                 <th>Teléfono</th>
-                <th>Asunto</th>
+                <th>Motivo</th>
                 <th>Mensaje</th>
                 <th>Fecha</th>
               </tr>
@@ -69,28 +111,29 @@ if ($conexion->connect_error) {
             <tbody>
               <?php if (empty($registros)): ?>
                 <tr>
-                  <td colspan="7" class="text-center py-4 text-secondary">
-                    Aún no hay mensajes registrados. Envía una prueba desde el formulario de Contactos.
+                  <td colspan="7" style="text-align: center; padding: 32px; color: var(--texto-secundario);">
+                    Aún no hay mensajes registrados en la tabla. Envía una prueba desde el formulario de contacto.
                   </td>
                 </tr>
               <?php else: ?>
                 <?php foreach ($registros as $fila): ?>
                   <tr>
-                    <td class="fw-bold"><?= (int)$fila['id'] ?></td>
+                    <td><strong><?= (int)$fila['id'] ?></strong></td>
                     <td><?= htmlspecialchars($fila['nombre']) ?></td>
-                    <td><a href="mailto:<?= htmlspecialchars($fila['correo']) ?>"><?= htmlspecialchars($fila['correo']) ?></a></td>
+                    <td><a href="mailto:<?= htmlspecialchars($fila['correo']) ?>" style="text-decoration: underline; color: var(--acento);"><?= htmlspecialchars($fila['correo']) ?></a></td>
                     <td><?= htmlspecialchars($fila['telefono'] ?: '-') ?></td>
-                    <td><span class="badge bg-secondary-subtle text-dark"><?= htmlspecialchars($fila['asunto']) ?></span></td>
+                    <td><code><?= htmlspecialchars($fila['asunto']) ?></code></td>
                     <td><?= nl2br(htmlspecialchars($fila['mensaje'])) ?></td>
-                    <td class="small text-muted"><?= htmlspecialchars($fila['fecha']) ?></td>
+                    <td style="font-family: var(--fuente-mono); font-size: 0.8rem; color: var(--texto-suave); white-space: nowrap;"><?= htmlspecialchars($fila['fecha']) ?></td>
                   </tr>
                 <?php endforeach; ?>
               <?php endif; ?>
             </tbody>
           </table>
         </div>
-      </div>
-    <?php endif; ?>
-  </div>
+      <?php endif; ?>
+    </div>
+  </main>
+
 </body>
 </html>
