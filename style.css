@@ -1,0 +1,305 @@
+/* ==========================================================================
+   Portafolio Personalizado - Alexis Uriel Urbano Elorriaga
+   Curso: Diseño de Interfaces | Docente: Miguel Pallín
+   ========================================================================== */
+
+:root {
+  --color-ink: #162420;
+  --color-accent: #234b3e;
+  --color-lime: #d7ed99;
+  --color-bg-soft: #f7f8f4;
+  --color-border: #dfe5dc;
+  --bs-body-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
+}
+
+body {
+  background-color: #ffffff;
+  color: var(--color-ink);
+  line-height: 1.6;
+}
+
+/* Utilidades de Marca */
+.text-accent {
+  color: var(--color-accent) !important;
+}
+
+.text-highlight {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-color: var(--color-lime);
+  text-decoration-thickness: 6px;
+  text-underline-offset: 4px;
+}
+
+.logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-accent);
+  color: var(--color-lime);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: monospace;
+}
+
+.section-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background-color: #eef3e8;
+  padding: 6px 14px;
+  border-radius: 30px;
+}
+
+.max-w-700 {
+  max-width: 700px;
+}
+
+/* Navegación */
+.navbar .nav-link {
+  color: var(--color-ink);
+  font-size: 0.88rem;
+  letter-spacing: 0.6px;
+  transition: color 0.2s ease;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  color: var(--color-accent);
+}
+
+/* Hero / Inicio */
+.hero-section {
+  background: linear-gradient(180deg, #ffffff 0%, var(--color-bg-soft) 100%);
+}
+
+.badge-tag {
+  background-color: #eef3e8;
+  border: 1px solid #d2dec7;
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.dot-live {
+  width: 8px;
+  height: 8px;
+  background-color: #3f8f53;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.retrato-wrapper {
+  max-width: 370px;
+}
+
+.retrato-img {
+  max-height: 360px;
+  width: 100%;
+  object-fit: cover;
+  object-position: top center;
+  background-color: #e6ece0;
+}
+
+.codigo-badge {
+  position: absolute;
+  top: 18px;
+  left: -18px;
+  z-index: 2;
+  background-color: var(--color-lime);
+  color: var(--color-ink);
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transform: rotate(-6deg);
+}
+
+.tarjeta-flotante {
+  position: absolute;
+  bottom: -16px;
+  left: -12px;
+  right: 12px;
+  z-index: 2;
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cinta-tech {
+  background-color: var(--color-accent);
+  color: #edf2e6;
+  letter-spacing: 1px;
+}
+
+.cinta-sep {
+  color: var(--color-lime);
+}
+
+/* Sección Nosotros */
+.especialidad-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.especialidad-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(22, 36, 32, 0.08);
+}
+
+.num-tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--color-accent);
+  background-color: var(--color-lime);
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+/* Sección Galería */
+.filtro-btn {
+  border: 1px solid #cbd5c6;
+  color: var(--color-ink);
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.filtro-btn:hover {
+  border-color: var(--color-accent);
+  background-color: #f3f6ef;
+}
+
+.filtro-btn.active {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #ffffff;
+}
+
+.galeria-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.galeria-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 28px rgba(22, 36, 32, 0.1) !important;
+}
+
+.galeria-img-box {
+  height: 230px;
+  overflow: hidden;
+  background-color: #e9eee4;
+  cursor: pointer;
+}
+
+.galeria-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.galeria-card:hover .galeria-img {
+  transform: scale(1.05);
+}
+
+.btn-zoom {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.92);
+  color: var(--color-ink);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-zoom:hover {
+  background-color: var(--color-lime);
+  transform: scale(1.08);
+}
+
+/* Sección Testimonios */
+.testimonio-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.testimonio-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(22, 36, 32, 0.08) !important;
+}
+
+.destacado-docente {
+  border-color: var(--color-accent) !important;
+  border-width: 2px !important;
+}
+
+.avatar-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+/* Sección Contactos */
+.icon-box {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 0.22rem rgba(35, 75, 62, 0.15);
+}
+
+/* Adaptabilidad Móvil (Responsive Design) */
+@media (max-width: 767.98px) {
+  .codigo-badge {
+    left: 6px;
+    top: 10px;
+    font-size: 0.85rem;
+  }
+
+  .tarjeta-flotante {
+    position: static;
+    margin-top: 12px;
+  }
+
+  .cinta-sep {
+    display: none;
+  }
+
+  .galeria-img-box {
+    height: 195px;
+  }
+}
